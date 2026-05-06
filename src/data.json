@@ -1,0 +1,16 @@
+{
+  "dashboard": {
+    "title": "Dashboard Overzicht",
+    "subtitle": "Systeemstatus optimaal. Welkom terug in de command module.",
+    "synthese": "87",
+    "delta": "+12.4"
+  },
+  "logboek": {
+    "title": "Logboek Indienen",
+    "project": "Refactoring Authentication Flow"
+  },
+  "evidence": {
+    "title": "Bewijslast & Koppeling",
+    "subtitle": "Beheer, visualiseer en verbind technische artefacten met je competentieprofiel. AI identificeert automatisch relevante patronen."
+  }
+}
