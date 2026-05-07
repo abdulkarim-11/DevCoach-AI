@@ -37,9 +37,6 @@ Zodat ik bewust bezig ben met mijn leerproces.
 
         De dagelijkse invoer kan niet worden afgesloten zonder deze velden in te vullen.
 
-This contains everything you need to run your app locally.
-
-View your app in AI Studio: https://ai.studio/apps/f7f4ba5a-0c7e-4757-bd5f-0c2822c49f85
 
 # Epic 2: Bewijs kunnen inleveren
 ## Userstory 4:
