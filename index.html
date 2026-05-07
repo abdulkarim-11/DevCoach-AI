@@ -6,6 +6,15 @@
     <title>DevCoach AI</title>
     <!-- Material Icons for icons instead of Lucide React -->
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <style>
+      @media print {
+        body { background: white; color: black; }
+        nav, header, button, .mobile-nav-btn { display: none !important; }
+        .bg-[#0f172a] { background: transparent !important; }
+        .text-[#e2e8f0] { color: black !important; }
+        * { box-shadow: none !important; }
+      }
+    </style>
   </head>
   <body class="bg-[#0f172a] text-[#e2e8f0] font-sans min-h-screen flex flex-col antialiased selection:bg-[#a855f7]/30">
     <header class="sticky top-0 z-50 border-b border-white/5 bg-[rgba(15,23,42,0.8)] backdrop-blur-xl">
@@ -13,17 +22,15 @@
         <div class="text-2xl font-bold text-[#a855f7] tracking-tight">DevCoach AI</div>
         
         <nav class="hidden md:flex items-center gap-10">
-          <button data-view="dashboard" class="nav-btn font-mono uppercase tracking-wider text-[13px] py-1 text-primary border-b-2 border-primary font-bold">Terminal</button>
-          <button data-view="evidence" class="nav-btn font-mono uppercase tracking-wider text-[13px] py-1 text-on-surface-variant hover:text-primary transition-colors border-b-2 border-transparent">Evidence</button>
-          <button data-view="logbook" class="nav-btn font-mono uppercase tracking-wider text-[13px] py-1 text-on-surface-variant hover:text-primary transition-colors border-b-2 border-transparent">Logbook</button>
-          <button class="font-mono uppercase tracking-wider text-[13px] py-1 text-on-surface-variant hover:text-primary transition-colors">Insights</button>
-          <button class="font-mono uppercase tracking-wider text-[13px] py-1 text-on-surface-variant hover:text-primary transition-colors">Settings</button>
+          <button data-view="dashboard" class="nav-btn font-mono uppercase tracking-wider text-[13px] py-1 text-primary border-b-2 border-primary font-bold">Overzicht</button>
+          <button data-view="logbook" class="nav-btn font-mono uppercase tracking-wider text-[13px] py-1 text-on-surface-variant hover:text-primary transition-colors border-b-2 border-transparent">Logboek Invullen</button>
+          <button data-view="evidence" class="nav-btn font-mono uppercase tracking-wider text-[13px] py-1 text-on-surface-variant hover:text-primary transition-colors border-b-2 border-transparent">Mijn Bewijzen</button>
         </nav>
 
         <div class="flex items-center gap-4 text-on-surface-variant">
-          <button class="hover:text-[#a855f7] transition-colors p-2 rounded-full hover:bg-white/5"><span class="material-symbols-outlined text-[20px]">sensors</span></button>
+          <button id="btn-export-pdf" class="hover:text-[#a855f7] transition-colors p-2 rounded-full hover:bg-white/5" title="Exporteer naar PDF"><span class="material-symbols-outlined text-[20px]">picture_as_pdf</span></button>
+          <button id="btn-export-json" class="hover:text-[#a855f7] transition-colors p-2 rounded-full hover:bg-white/5" title="Exporteer naar JSON"><span class="material-symbols-outlined text-[20px]">download</span></button>
           <button class="hover:text-[#a855f7] transition-colors p-2 rounded-full hover:bg-white/5"><span class="material-symbols-outlined text-[20px]">notifications</span></button>
-          <button class="hover:text-[#a855f7] transition-colors p-2 rounded-full hover:bg-white/5"><span class="material-symbols-outlined text-[20px]">account_circle</span></button>
         </div>
       </div>
     </header>
@@ -33,228 +40,163 @@
       <!-- DASHBOARD VIEW -->
       <div id="view-dashboard" class="view flex flex-col gap-10 w-full py-16 mx-auto" style="display: block;">
         <header class="flex flex-col gap-2">
-          <h1 class="text-4xl text-[#e2e8f0] font-bold tracking-tight">Dashboard Overzicht</h1>
-          <p class="text-[#94a3b8] text-sm max-w-2xl">Systeemstatus optimaal. Welkom terug in de command module.</p>
+          <h1 id="dashboard-title" class="text-4xl text-[#e2e8f0] font-bold tracking-tight">Weekly Review</h1>
+          <p id="dashboard-subtitle" class="text-[#94a3b8] text-sm max-w-2xl">Jouw voortgang en ontwikkeling als software developer van deze week.</p>
         </header>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch min-h-[600px]">
-          <!-- Terminal Log -->
-          <div class="lg:col-span-3 flex flex-col bg-[rgba(16,20,21,0.4)] backdrop-blur-xl border border-white/5 rounded-xl overflow-hidden relative group">
-            <div class="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent pointer-events-none"></div>
-            <div class="px-6 py-4 border-b border-white/5 flex items-center justify-between bg-black/20">
-              <h2 class="font-mono uppercase text-[#94a3b8] tracking-wider flex items-center gap-2 text-xs">
-                <span class="material-symbols-outlined text-[14px]">terminal</span> Terminal Log
-              </h2>
-              <span class="w-2 h-2 rounded-full bg-[#a855f7] animate-pulse shadow-[0_0_8px_#a855f7]"></span>
-            </div>
-            <div class="flex-1 p-6 font-mono text-[#94a3b8] overflow-y-auto flex flex-col gap-4 text-[13px]">
-              <div class="flex gap-4 opacity-60"><span class="text-[#475569]">09:41:02</span><span class="text-[#a855f7]">&gt; SYS_INIT_START</span></div>
-              <div class="flex gap-4 opacity-70"><span class="text-[#475569]">09:41:05</span><span>Laden neurale netwerk parameters...</span></div>
-              <div class="flex gap-4 opacity-80"><span class="text-[#475569]">09:41:12</span><span class="text-[#0ea5e9]">Validatie module geladen.</span></div>
-              <div class="flex gap-4"><span class="text-[#475569]">09:42:00</span><span class="text-[#a855f7]">&gt; RUN_CODE_ANALYSIS</span></div>
-              <div class="flex gap-4"><span class="text-[#475569]">09:42:01</span><span>Scannen repository 'Core-API-v2'...</span></div>
-              <div class="flex gap-4"><span class="text-[#475569]">09:42:15</span><span class="text-[#ef4444]">Waarschuwing: Geheugenlek gedetecteerd.</span></div>
-              <div class="flex gap-4"><span class="text-[#475569]">09:43:00</span><span>Wachten op input...</span></div>
-              <div class="flex gap-4 mt-auto text-[#a855f7]"><span class="animate-pulse">_</span></div>
-            </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 items-stretch">
+          <div class="bg-[rgba(16,20,21,0.4)] backdrop-blur-xl border border-white/5 rounded-xl p-6">
+             <div class="font-mono text-[#94a3b8] uppercase text-xs mb-2">Totaal Uren</div>
+             <div id="stat-hours" class="text-3xl font-bold text-[#a855f7]">0</div>
           </div>
-
-          <!-- Orbit Visualization -->
-          <div class="lg:col-span-6 bg-[rgba(16,20,21,0.4)] backdrop-blur-xl border border-white/5 rounded-xl p-16 flex flex-col items-center justify-center relative overflow-hidden min-h-[400px]">
-             <div class="absolute inset-0 bg-gradient-to-br from-[#a855f7]/5 to-transparent pointer-events-none"></div>
-             <div class="relative w-full max-w-[400px] aspect-square flex items-center justify-center mt-[-40px]">
-                <div class="orbit-ring w-[80%] h-[80%]" style="animation: spin-slow 20s linear infinite;"></div>
-                <div class="orbit-ring border-dashed w-[60%] h-[60%]" style="animation: spin-reverse 25s linear infinite; border-style: dashed;"></div>
-                <div class="orbit-ring w-[40%] h-[40%] border-[#a855f7]/40 shadow-[0_0_30px_rgba(168,85,247,0.15)]"></div>
-                
-                <div class="absolute inset-0 flex flex-col items-center justify-center z-10">
-                  <span class="text-[64px] font-bold text-[#a855f7] tracking-tighter leading-none drop-shadow-lg">87<span class="text-[32px] font-normal">%</span></span>
-                  <span class="font-mono uppercase text-[#94a3b8] tracking-widest mt-2 text-xs">Synthese</span>
-                </div>
-             </div>
-             
-             <div class="absolute bottom-6 left-6 right-6 flex justify-between items-end">
-                <div>
-                  <div class="font-mono text-[#94a3b8] uppercase mb-2 text-xs tracking-wider">Wekelijkse Delta</div>
-                  <div class="text-[#a855f7] font-bold">+12.4 eenheden</div>
-                </div>
-                <div class="text-right">
-                  <div class="font-mono text-[#94a3b8] uppercase mb-2 text-xs tracking-wider">Status</div>
-                  <div class="text-[#e2e8f0] bg-white/5 px-2 py-1 rounded border border-white/5 font-mono text-[10px] tracking-widest">STABIEL</div>
-                </div>
-             </div>
+          <div class="bg-[rgba(16,20,21,0.4)] backdrop-blur-xl border border-white/5 rounded-xl p-6">
+             <div class="font-mono text-[#94a3b8] uppercase text-xs mb-2">Aantal Logs</div>
+             <div id="stat-logs" class="text-3xl font-bold text-[#0ea5e9]">0</div>
           </div>
+          <div class="bg-[rgba(16,20,21,0.4)] backdrop-blur-xl border border-white/5 rounded-xl p-6">
+             <div class="font-mono text-[#94a3b8] uppercase text-xs mb-2">Bewijsstukken</div>
+             <div id="stat-evidence" class="text-3xl font-bold text-[#f43f5e]">0</div>
+          </div>
+          <div class="bg-[rgba(16,20,21,0.4)] backdrop-blur-xl border border-white/5 rounded-xl p-6">
+             <div class="font-mono text-[#94a3b8] uppercase text-xs mb-2">Gedekte Processen</div>
+             <div id="stat-processes" class="text-xl font-bold text-[#e2e8f0]">Geen</div>
+          </div>
+        </div>
 
-          <!-- Priority Stack -->
-          <div class="lg:col-span-3 flex flex-col gap-6">
-             <h2 class="font-mono uppercase text-[#94a3b8] tracking-wider flex items-center gap-2 px-2 text-xs">
-                <span class="material-symbols-outlined text-[14px]">layers</span> Prioriteit Stack
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+          <!-- Ontwikkeling & Tips -->
+          <div class="bg-[rgba(16,20,21,0.4)] backdrop-blur-xl border border-white/5 rounded-xl overflow-hidden relative flex flex-col p-6">
+             <h2 class="font-mono uppercase text-[#a855f7] tracking-wider mb-4 flex items-center gap-2 text-sm border-b border-white/5 pb-2">
+                <span class="material-symbols-outlined text-[18px]">insights</span> Analyse & Tips (Coach)
              </h2>
-             
-             <!-- Card 1 -->
-             <div class="bg-[rgba(16,20,21,0.4)] backdrop-blur-xl border border-white/5 rounded-xl p-6 hover:border-[#a855f7]/50 transition-colors cursor-pointer relative overflow-hidden">
-               <div class="absolute left-0 top-0 bottom-0 w-1 bg-[#ef4444]/80"></div>
-               <div class="flex justify-between items-start mb-4">
-                  <span class="font-mono text-[9px] uppercase tracking-widest text-[#ef4444] border border-[#ef4444]/20 bg-[#ef4444]/10 px-1 py-0.5 rounded">Kritiek</span>
-                  <span class="material-symbols-outlined text-[16px] text-[#94a3b8]">arrow_forward</span>
-               </div>
-               <h3 class="text-base text-[#e2e8f0] font-semibold leading-tight mb-2">Geheugenlek Analyse</h3>
-               <p class="text-xs text-[#94a3b8] line-clamp-2">Bekijk de dumps van de auth service na de deployment.</p>
+             <div class="text-sm text-[#e2e8f0] flex flex-col gap-4">
+                <p id="dashboard-analysis">Nog onvoldoende data voor een wekelijkse analyse. Vul meer logboeken in.</p>
+                <div class="bg-black/20 p-4 rounded-lg border border-white/5">
+                   <h3 class="font-bold text-[#0ea5e9] mb-2 text-xs uppercase tracking-wider">Ontbrekende Werkprocessen:</h3>
+                   <p id="dashboard-missing-processes" class="text-[#94a3b8]">B1-K1-W1 (Analyseren), B1-K1-W4 (Opleveren)</p>
+                </div>
+                <div class="bg-black/20 p-4 rounded-lg border border-white/5">
+                   <h3 class="font-bold text-[#ef4444] mb-2 text-xs uppercase tracking-wider">Tip voor verbetering:</h3>
+                   <p>Zorg dat je bewijslast visueel maakt ter onderbouwing van je gerealiseerde code. Gebruik de STARR-methode beter in je reflectie.</p>
+                </div>
              </div>
+          </div>
 
-             <!-- Card 2 -->
-             <div class="bg-[rgba(16,20,21,0.4)] backdrop-blur-xl border border-white/5 rounded-xl p-6 hover:border-[#a855f7]/50 transition-colors cursor-pointer relative overflow-hidden">
-               <div class="absolute left-0 top-0 bottom-0 w-1 bg-[#a855f7]/80"></div>
-               <div class="flex justify-between items-start mb-4">
-                  <span class="font-mono text-[9px] uppercase tracking-widest text-[#a855f7] border border-[#a855f7]/20 bg-[#a855f7]/10 px-1 py-0.5 rounded">Hoog</span>
-                  <span class="material-symbols-outlined text-[16px] text-[#94a3b8]">arrow_forward</span>
-               </div>
-               <h3 class="text-base text-[#e2e8f0] font-semibold leading-tight mb-2">Architectuur Review</h3>
-               <p class="text-xs text-[#94a3b8] line-clamp-2">Beoordeel de voorgestelde microservices transitie voor data.</p>
+          <!-- Recente Activiteit -->
+          <div class="bg-[rgba(16,20,21,0.4)] backdrop-blur-xl border border-white/5 rounded-xl relative flex flex-col p-6">
+             <h2 class="font-mono uppercase text-[#e2e8f0] tracking-wider mb-4 flex items-center gap-2 text-sm border-b border-white/5 pb-2">
+                <span class="material-symbols-outlined text-[18px]">history</span> Recente Entries
+             </h2>
+             <div id="dashboard-recent-list" class="flex flex-col gap-3 overflow-y-auto max-h-[300px]">
+                <p class="text-[#94a3b8] text-sm">Geen recente logs gevonden.</p>
              </div>
           </div>
         </div>
       </div>
 
       <!-- LOGBOOK VIEW -->
-      <div id="view-logbook" class="view flex flex-col items-center justify-center py-16 w-full" style="display: none;">
-        <div class="w-full max-w-[800px] flex flex-col gap-10 relative mt-8">
-          <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 pb-2 border-b border-white/5">
-            <div class="flex-grow w-full md:w-auto">
-              <label class="block font-mono text-[#94a3b8] uppercase mb-2 tracking-widest text-[11px]" for="project-input">Huidig Project</label>
-              <input id="project-input" type="text" value="Refactoring Authentication Flow" class="w-full bg-transparent border-none text-[32px] font-bold text-[#e2e8f0] placeholder:text-[#e2e8f0]/30 focus:outline-none p-0 focus:ring-0" placeholder="Naam van project..." />
-            </div>
-            <div class="flex items-center gap-4 shrink-0 bg-[rgba(25,28,30,0.4)] px-3 py-2 rounded-lg border border-white/5 mb-2">
-               <span class="material-symbols-outlined text-[16px] text-[#94a3b8]">schedule</span>
-               <input type="number" step="0.5" min="0" value="4.5" class="w-[44px] bg-transparent border-none font-mono text-[#a855f7] focus:outline-none p-0 text-right focus:ring-0 text-sm" />
-               <span class="font-mono text-[#94a3b8] text-sm pr-1">uur</span>
-            </div>
+      <div id="view-logbook" class="view flex flex-col gap-6 w-full py-8 md:py-16 mx-auto" style="display: none;">
+        <header class="flex flex-col gap-2 mb-4">
+          <h1 class="text-4xl text-[#e2e8f0] font-bold tracking-tight">Logboek Invullen</h1>
+          <p class="text-[#94a3b8] text-sm">Registreer je uren, specifieke taken, reflectie en bewijs.</p>
+        </header>
+
+        <form id="form-logbook" class="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-8">
+          
+          <!-- Kolom 1 -->
+          <div class="flex flex-col gap-6">
+             <div class="bg-[rgba(16,20,21,0.4)] p-6 rounded-xl border border-white/5 flex flex-col gap-4">
+                <h3 class="font-mono text-[#a855f7] uppercase tracking-wider text-xs border-b border-[#a855f7]/30 pb-2">Basis Info</h3>
+                <div class="flex gap-4">
+                   <div class="flex-1">
+                      <label class="block text-xs text-[#94a3b8] mb-1">Datum</label>
+                      <input type="date" id="input-date" required class="w-full bg-black/40 border border-[#334155] rounded px-3 py-2 text-sm text-[#e2e8f0] focus:border-[#a855f7] outline-none" />
+                   </div>
+                   <div class="w-32">
+                      <label class="block text-xs text-[#94a3b8] mb-1">Uren</label>
+                      <input type="number" id="input-hours" required min="0.5" step="0.5" placeholder="bijv. 4.5" class="w-full bg-black/40 border border-[#334155] rounded px-3 py-2 text-sm text-[#e2e8f0] focus:border-[#a855f7] outline-none" />
+                   </div>
+                </div>
+
+                <div>
+                   <label class="block text-xs text-[#94a3b8] mb-1 flex justify-between">
+                     <span>Concrete Taken (Wees specifiek!)</span>
+                     <span id="task-feedback" class="text-[#ef4444] font-bold text-[10px] hidden">Te algemeen! Voorbeeld: "Login API gebouwd."</span>
+                   </label>
+                   <textarea id="input-tasks" required rows="4" placeholder="Niet goed: 'Aan de app gewerkt'&#10;Wel goed: 'Een loginformulier gemaakt met validatie op lege velden.'" class="w-full bg-black/40 border border-[#334155] rounded px-3 py-2 text-sm text-[#e2e8f0] focus:border-[#a855f7] outline-none resize-none"></textarea>
+                </div>
+             </div>
+
+             <div class="bg-[rgba(16,20,21,0.4)] p-6 rounded-xl border border-white/5 flex flex-col gap-4">
+                <h3 class="font-mono text-[#0ea5e9] uppercase tracking-wider text-xs border-b border-[#0ea5e9]/30 pb-2">Reflectie</h3>
+                <div>
+                   <label class="block text-xs text-[#94a3b8] mb-1">Wat ging er goed?</label>
+                   <textarea id="input-good" required rows="2" class="w-full bg-black/40 border border-[#334155] rounded px-3 py-2 text-sm text-[#e2e8f0] focus:border-[#0ea5e9] outline-none resize-none"></textarea>
+                </div>
+                <div>
+                   <label class="block text-xs text-[#94a3b8] mb-1">Wat kan er beter?</label>
+                   <textarea id="input-bad" required rows="2" class="w-full bg-black/40 border border-[#334155] rounded px-3 py-2 text-sm text-[#e2e8f0] focus:border-[#0ea5e9] outline-none resize-none"></textarea>
+                </div>
+             </div>
           </div>
 
-          <div class="relative w-full flex-grow flex flex-col mt-4">
-            <textarea class="w-full min-h-[400px] resize-none bg-transparent border-none text-base text-[#e2e8f0] placeholder:text-[#e2e8f0]/30 focus:outline-none p-0 leading-relaxed focus:ring-0" placeholder="Wat heb je vandaag gedaan? (Markdown ondersteund)&#10;&#10;Begin met typen om in focus mode te gaan..."></textarea>
-            
-            <div class="absolute -right-6 lg:-right-12 top-12 translate-x-full hidden xl:flex flex-col gap-4 w-[280px] bg-[rgba(30,41,59,0.6)] backdrop-blur-xl border border-[#a855f7] drop-shadow-[0_0_20px_rgba(168,85,247,0.15)] rounded-xl p-6 z-20">
-               <div class="flex items-center gap-2 text-[#a855f7] mb-2">
-                  <span class="material-symbols-outlined text-[16px]">psychology</span>
-                  <span class="font-mono uppercase tracking-wider text-[11px]">Coach Reflectie</span>
-               </div>
-               <p class="text-[13px] text-[#94a3b8] leading-relaxed">
-                  Denk aan de <strong class="text-[#e2e8f0]">STARR</strong> methode voor een diepere reflectie:
-               </p>
-               <ul class="text-[13px] text-[#94a3b8]/80 space-y-1.5 mt-2">
-                  <li><span class="text-[#a855f7] font-bold">S</span>ituatie: Wat speelde er?</li>
-                  <li><span class="text-[#a855f7] font-bold">T</span>aak: Wat moest je doen?</li>
-                  <li><span class="text-[#a855f7] font-bold">A</span>ctie: Wat heb je gedaan?</li>
-               </ul>
-            </div>
-          </div>
+          <!-- Kolom 2 -->
+          <div class="flex flex-col gap-6">
+             <div class="bg-[rgba(16,20,21,0.4)] p-6 rounded-xl border border-white/5 flex flex-col gap-4">
+                <h3 class="font-mono text-[#f43f5e] uppercase tracking-wider text-xs border-b border-[#f43f5e]/30 pb-2 flex justify-between items-center">
+                   Bewijslast
+                   <span class="text-[10px] bg-[#f43f5e]/20 text-[#f43f5e] px-2 py-0.5 rounded">Vereist</span>
+                </h3>
+                <p class="text-xs text-[#94a3b8]">Zonder bewijs is een taak niet compleet.</p>
+                <div>
+                   <label class="block text-xs text-[#94a3b8] mb-1">Link (GitHub, Drive, Figma, Server)</label>
+                   <input type="url" id="input-evidence-link" required placeholder="https://github.com/..." class="w-full bg-black/40 border border-[#334155] rounded px-3 py-2 text-sm text-[#e2e8f0] focus:border-[#f43f5e] outline-none" />
+                </div>
+                <div>
+                   <label class="block text-xs text-[#94a3b8] mb-1">Korte toelichting bewijs</label>
+                   <textarea id="input-evidence-desc" required rows="2" placeholder="Wat is hier te zien?" class="w-full bg-black/40 border border-[#334155] rounded px-3 py-2 text-sm text-[#e2e8f0] focus:border-[#f43f5e] outline-none resize-none"></textarea>
+                </div>
+             </div>
 
-          <div class="pt-6 border-t border-white/5 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-             <div class="flex flex-col gap-2 w-full md:w-auto">
-                <span class="font-mono text-[#94a3b8] uppercase text-[10px] tracking-widest">Gevormde Skills</span>
-                <div class="flex flex-wrap gap-2">
-                   <span class="font-mono text-[#a855f7] bg-[#a855f7]/10 border border-[#a855f7]/20 px-2 py-1 rounded text-xs flex items-center">#html-css-js</span>
-                   <span class="font-mono text-[#a855f7] bg-[#a855f7]/10 border border-[#a855f7]/20 px-2 py-1 rounded text-xs flex items-center">#java</span>
-                   <span class="font-mono text-[#a855f7] bg-[#a855f7]/10 border border-[#a855f7]/20 px-2 py-1 rounded text-xs flex items-center">#json</span>
-                   <button class="font-mono text-[#94a3b8] border border-white/10 hover:border-[#a855f7]/50 hover:text-[#a855f7] px-2 py-1 rounded text-xs flex items-center gap-1 transition-colors border-dashed">
-                      <span class="material-symbols-outlined text-[12px]">add</span> add_skill
-                   </button>
+             <div class="bg-[rgba(16,20,21,0.4)] p-6 rounded-xl border border-white/5 flex flex-col gap-4">
+                <h3 class="font-mono text-[#a855f7] uppercase tracking-wider text-xs border-b border-[#a855f7]/30 pb-2">Werkprocessen</h3>
+                <div>
+                   <label class="block text-xs text-[#94a3b8] mb-1">Koppel werkprocessen (Selecteer of voeg toe)</label>
+                   <div class="flex gap-2 mb-2">
+                       <select id="input-process-select" class="flex-1 bg-black/40 border border-[#334155] rounded px-3 py-2 text-sm text-[#e2e8f0] outline-none">
+                           <option value="">-- Kies een proces --</option>
+                           <option value="B1-K1-W1">B1-K1-W1 (Requirements)</option>
+                           <option value="B1-K1-W2">B1-K1-W2 (Ontwerp maken)</option>
+                           <option value="B1-K1-W3">B1-K1-W3 (Realiseren)</option>
+                           <option value="B1-K1-W4">B1-K1-W4 (Testen)</option>
+                           <option value="B1-K1-W5">B1-K1-W5 (Opleveren)</option>
+                       </select>
+                       <button type="button" id="btn-add-process" class="bg-[#334155] hover:bg-[#475569] text-white px-3 py-2 rounded text-sm transition-colors">Voeg toe</button>
+                   </div>
+                   <div id="process-tags" class="flex flex-wrap gap-2 min-h-[32px] p-2 bg-black/20 rounded border border-[#334155]">
+                      <!-- Process tags inject here -->
+                   </div>
                 </div>
              </div>
              
-             <div class="flex items-center gap-4 w-full md:w-auto justify-end">
-                <button class="font-mono uppercase text-[#94a3b8] hover:text-[#e2e8f0] px-4 py-2 rounded-lg transition-all text-xs tracking-wider">
-                   Opslaan als Concept
-                </button>
-                <button class="font-mono uppercase text-white bg-[#a855f7] px-5 py-2.5 rounded-lg hover:opacity-90 hover:scale-[1.02] transition-all flex items-center gap-2 font-bold shadow-[0_0_15px_rgba(168,85,247,0.3)] text-xs tracking-wider">
-                   <span class="material-symbols-outlined text-[14px]">cloud_upload</span> Log Indienen
+             <div class="mt-auto">
+                <button type="submit" class="w-full bg-[#a855f7] hover:bg-[#8b5cf6] text-white font-bold py-3 rounded-lg shadow-[0_0_15px_rgba(168,85,247,0.4)] transition-all flex justify-center items-center gap-2">
+                   <span class="material-symbols-outlined text-[20px]">save</span> Logboek Indienen en Opslaan
                 </button>
              </div>
           </div>
-        </div>
+        </form>
       </div>
 
       <!-- EVIDENCE VIEW -->
-      <div id="view-evidence" class="view flex flex-col gap-10 w-full py-16 mx-auto" style="display: none;">
-        <div class="flex flex-col gap-2">
-          <h1 class="text-4xl text-[#e2e8f0] font-bold tracking-tight">Bewijslast & Koppeling</h1>
-          <p class="text-[#94a3b8] max-w-2xl text-sm">Beheer, visualiseer en verbind technische artefacten met je competentieprofiel. AI identificeert automatisch relevante patronen.</p>
-        </div>
+      <div id="view-evidence" class="view flex flex-col gap-6 w-full py-8 md:py-16 mx-auto" style="display: none;">
+        <header class="flex flex-col gap-2 mb-6">
+          <h1 class="text-4xl text-[#e2e8f0] font-bold tracking-tight">Opgeslagen Bewijslast</h1>
+          <p class="text-[#94a3b8] text-sm max-w-2xl">Al jouw gekoppelde werkprocessen, taken en bewijzen op één plek.</p>
+        </header>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-           <section class="lg:col-span-8 bg-[rgba(15,23,42,0.6)] backdrop-blur-xl border border-white/5 rounded-xl flex flex-col h-[600px] relative overflow-hidden">
-              <header class="flex justify-between items-center z-10 p-6 border-b border-white/5 bg-black/20">
-                 <h2 class="text-xl font-semibold text-[#e2e8f0] tracking-tight">Nexus Connecties</h2>
-                 <span class="font-mono text-[#a855f7] border border-[#a855f7]/30 bg-[#a855f7]/10 px-2 py-0.5 rounded text-[10px] tracking-widest uppercase">Live View</span>
-              </header>
-              
-              <div class="flex-grow relative w-full h-full flex items-center justify-center overflow-hidden">
-                 <svg class="absolute inset-0 w-full h-full pointer-events-none opacity-[0.03]" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                       <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                          <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" strokeWidth="1"></path>
-                       </pattern>
-                    </defs>
-                    <rect width="100%" height="100%" fill="url(#grid)"></rect>
-                    <path class="nexus-line stroke-[#a855f7]/30 stroke-[1px] fill-transparent" d="M 220,160 Q 400,240 500,240" />
-                    <path class="nexus-line stroke-[#a855f7]/30 stroke-[1px] fill-transparent" d="M 220,400 Q 400,240 500,240" />
-                    <path class="nexus-line stroke-[#a855f7]/30 stroke-[1px] fill-transparent" d="M 220,160 Q 300,300 220,400" />
-                 </svg>
-
-                 <div class="absolute top-[100px] left-[10%] bg-[rgba(30,41,59,0.6)] backdrop-blur-xl border border-[#a855f7] shadow-[0_0_20px_rgba(168,85,247,0.15)] rounded-lg p-3 flex flex-col items-center gap-1.5 cursor-pointer hover:scale-105 transition-transform w-[120px]">
-                    <span class="material-symbols-outlined text-[28px] text-[#0ea5e9]">description</span>
-                    <span class="font-mono text-center text-[11px] w-full truncate text-[#e2e8f0]">arch_v2.pdf</span>
-                 </div>
-
-                 <div class="absolute top-[170px] right-[15%] bg-[rgba(15,23,42,0.6)] backdrop-blur-xl border border-[#334155]/30 rounded-full flex flex-col items-center justify-center hover:border-[#a855f7]/50 transition-colors cursor-pointer w-[140px] h-[140px] shadow-xl bg-[rgba(11,15,16,0.5)]">
-                    <span class="material-symbols-outlined text-[24px] text-[#a855f7] mb-2 opacity-80">explore</span>
-                    <span class="font-mono block text-[#e2e8f0] text-sm">OOD-01</span>
-                    <span class="text-[9px] text-[#94a3b8] uppercase tracking-widest mt-1">Design</span>
-                 </div>
-
-                 <div class="absolute bottom-[140px] left-[15%] bg-[rgba(15,23,42,0.6)] backdrop-blur-xl border border-white/5 rounded-lg p-3 flex flex-col items-center gap-1.5 cursor-pointer hover:border-[#a855f7]/50 transition-colors w-[120px] shadow-lg">
-                    <span class="material-symbols-outlined text-[28px] text-[#f43f5e]">code</span>
-                    <span class="font-mono text-center text-[11px] w-full truncate text-[#e2e8f0]">api_spec.json</span>
-                 </div>
-              </div>
-           </section>
-
-           <div class="lg:col-span-4 flex flex-col gap-6 h-[600px]">
-              <section class="bg-[rgba(15,23,42,0.6)] backdrop-blur-xl border border-white/5 rounded-xl p-6 flex-shrink-0">
-                 <header class="flex items-center gap-2 mb-4">
-                    <span class="material-symbols-outlined text-[16px] text-[#94a3b8]">terminal</span>
-                    <h3 class="font-mono uppercase tracking-widest text-[11px] text-[#e2e8f0]">GitHub Pulse</h3>
-                 </header>
-                 <div class="flex flex-col gap-4">
-                    <div class="flex gap-3 items-start">
-                       <div class="w-1.5 h-1.5 rounded-full bg-[#a855f7] mt-1.5 flex-shrink-0"></div>
-                       <div class="min-w-0">
-                          <p class="font-mono text-[#e2e8f0] text-[13px] truncate">feat(auth): implement JWT refresh</p>
-                          <p class="text-[11px] text-[#94a3b8] mt-1.5">2 hours ago • repo: core-api</p>
-                       </div>
-                    </div>
-                 </div>
-              </section>
-
-              <section class="bg-[rgba(15,23,42,0.6)] backdrop-blur-xl border border-white/5 rounded-xl p-6 flex-grow flex flex-col overflow-hidden">
-                 <header class="flex items-center gap-2 mb-4">
-                    <span class="material-symbols-outlined text-[16px] text-[#a855f7]">psychology</span>
-                    <h3 class="font-mono uppercase tracking-widest text-[11px] text-[#a855f7]">Coach AI Connecties</h3>
-                 </header>
-                 <div class="flex-grow overflow-y-auto pr-2 flex flex-col gap-3">
-                    <div class="border border-white/5 bg-[rgba(25,28,30,0.4)]/50 rounded-lg p-3 hover:bg-white/5 transition-colors">
-                       <p class="text-[13px] text-[#e2e8f0] mb-3 leading-relaxed">
-                          Ik zie dat <span class="font-mono text-[#a855f7]">arch_v2.pdf</span> sterke overeenkomsten vertoont met de vereisten voor <span class="font-mono text-[#e2e8f0]">OOD-01 (Design)</span>.
-                       </p>
-                       <div class="flex gap-2">
-                          <button class="bg-[#a855f7]/10 border border-[#a855f7]/30 text-[#a855f7] hover:bg-[#a855f7] hover:text-white font-mono text-[10px] px-3 py-1.5 rounded transition-colors uppercase tracking-widest">Accepteer</button>
-                          <button class="border border-white/10 text-[#94a3b8] hover:border-white/30 hover:text-[#e2e8f0] font-mono text-[10px] px-3 py-1.5 rounded transition-colors uppercase tracking-widest">Negeer</button>
-                       </div>
-                    </div>
-                 </div>
-              </section>
-           </div>
+        <div id="evidence-list" class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+           <!-- Populated by JS -->
         </div>
       </div>
     </main>
