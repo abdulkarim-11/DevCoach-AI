@@ -136,11 +136,3 @@ Zodat ik het niet vergeet.
         Het systeem controleert dagelijks op een ingesteld tijdstip (bijv. 16:00 uur) of er een logboek-entry is voor die dag.
 
         Indien dit ontbreekt, wordt er een reminder gestuurd (bijvoorbeeld via e-mail of pushnotificatie, afhankelijk van de architectuur).
-**Prerequisites:**  Node.js
-
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
