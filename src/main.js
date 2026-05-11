@@ -27,22 +27,22 @@ document.addEventListener('DOMContentLoaded', () => {
         // Update nav active states (desktop)
         document.querySelectorAll('.nav-btn').forEach(btn => {
             if (btn.dataset.view === viewId) {
-                btn.classList.add('text-[#a855f7]', 'border-[#a855f7]', 'font-bold');
-                btn.classList.remove('text-[#94a3b8]', 'border-transparent');
+                btn.classList.add('text-primary', 'border-primary', 'font-bold');
+                btn.classList.remove('text-on-surface-variant', 'border-transparent');
             } else {
-                btn.classList.remove('text-[#a855f7]', 'border-[#a855f7]', 'font-bold');
-                btn.classList.add('text-[#94a3b8]', 'border-transparent');
+                btn.classList.remove('text-primary', 'border-primary', 'font-bold');
+                btn.classList.add('text-on-surface-variant', 'border-transparent');
             }
         });
 
         // Mobile nav active states
         document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
             if (btn.dataset.view === viewId) {
-                btn.classList.add('bg-[#a855f7]', 'text-white', 'scale-110', 'shadow-[0_0_15px_rgba(168,85,247,0.4)]');
-                btn.classList.remove('text-[#94a3b8]', 'bg-transparent');
+                btn.classList.add('bg-primary', 'text-[var(--color-on-primary,white)]', 'scale-110', 'shadow-[0_0_15px_var(--color-primary)]');
+                btn.classList.remove('text-on-surface-variant', 'bg-transparent');
             } else {
-                btn.classList.remove('bg-[#a855f7]', 'text-white', 'scale-110', 'shadow-[0_0_15px_rgba(168,85,247,0.4)]');
-                btn.classList.add('text-[#94a3b8]', 'bg-transparent');
+                btn.classList.remove('bg-primary', 'text-[var(--color-on-primary,white)]', 'scale-110', 'shadow-[0_0_15px_var(--color-primary)]');
+                btn.classList.add('text-on-surface-variant', 'bg-transparent');
             }
         });
 
@@ -61,6 +61,22 @@ document.addEventListener('DOMContentLoaded', () => {
             if (view) switchView(view);
         });
     });
+
+    const themeToggleBtn = document.getElementById('btn-theme-toggle');
+    if (themeToggleBtn) {
+        // Read stored theme preference or use default dark
+        if (localStorage.getItem('theme') === 'light') {
+            document.documentElement.classList.remove('dark');
+        } else {
+            document.documentElement.classList.add('dark');
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            const isDark = document.documentElement.classList.contains('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        });
+    }
 
     // ==== DASHBOARD & RENDER LOGIC ====
     const renderDashboard = () => {
@@ -97,17 +113,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const listEl = document.getElementById('dashboard-recent-list');
         listEl.innerHTML = '';
         if (journalData.length === 0) {
-            listEl.innerHTML = '<p class="text-[#94a3b8] text-sm">Geen recente logs gevonden.</p>';
+            listEl.innerHTML = '<p class="text-on-surface-variant text-sm">Geen recente logs gevonden.</p>';
         } else {
             const recent = [...journalData].reverse().slice(0, 5); // top 5
             recent.forEach(entry => {
                 listEl.innerHTML += `
-                    <div class="flex flex-col gap-1 border-b border-white/5 pb-2">
+                    <div class="flex flex-col gap-1 border-b border-border pb-2">
                         <div class="flex justify-between items-center">
-                            <span class="text-[#e2e8f0] text-sm font-bold">${entry.date}</span>
-                            <span class="text-[#a855f7] text-xs font-mono">${entry.hours} uur</span>
+                            <span class="text-on-surface text-sm font-bold">${entry.date}</span>
+                            <span class="text-primary text-xs font-mono">${entry.hours} uur</span>
                         </div>
-                        <p class="text-[#94a3b8] text-xs truncate w-full" title="${entry.tasks}">${entry.tasks}</p>
+                        <p class="text-on-surface-variant text-xs truncate w-full" title="${entry.tasks}">${entry.tasks}</p>
                     </div>
                 `;
             });
@@ -119,45 +135,45 @@ document.addEventListener('DOMContentLoaded', () => {
         listEl.innerHTML = '';
 
         if (journalData.length === 0) {
-            listEl.innerHTML = '<p class="text-[#94a3b8] text-sm lg:col-span-2">Je hebt nog geen bewijslast geüpload.</p>';
+            listEl.innerHTML = '<p class="text-on-surface-variant text-sm lg:col-span-2">Je hebt nog geen bewijslast geüpload.</p>';
             return;
         }
 
         const entries = [...journalData].reverse();
         entries.forEach((entry, idx) => {
-            const processesHTML = entry.processes.map(p => `<span class="bg-[#a855f7]/20 text-[#a855f7] px-2 py-0.5 rounded text-[10px] font-mono border border-[#a855f7]/30">${p}</span>`).join('');
+            const processesHTML = entry.processes.map(p => `<span class="bg-primary/20 text-primary px-2 py-0.5 rounded text-[10px] font-mono border border-primary/30">${p}</span>`).join('');
             
             listEl.innerHTML += `
-                <div class="bg-[rgba(16,20,21,0.4)] backdrop-blur-xl border border-white/5 rounded-xl p-6 flex flex-col gap-4">
-                    <div class="flex justify-between items-start border-b border-white/10 pb-3">
+                <div class="bg-surface-container backdrop-blur-xl border border-border rounded-xl p-6 flex flex-col gap-4">
+                    <div class="flex justify-between items-start border-b border-border pb-3">
                         <div>
-                            <div class="text-[#e2e8f0] font-bold text-lg">${entry.date}</div>
-                            <div class="text-[#94a3b8] text-xs font-mono">${entry.hours} uur besteed</div>
+                            <div class="text-on-surface font-bold text-lg">${entry.date}</div>
+                            <div class="text-on-surface-variant text-xs font-mono">${entry.hours} uur besteed</div>
                         </div>
                         <div class="flex flex-wrap max-w-[150px] justify-end gap-1">
                             ${processesHTML}
                         </div>
                     </div>
                     <div>
-                        <h4 class="text-xs uppercase tracking-wider text-[#94a3b8] mb-1">Taken</h4>
-                        <p class="text-[#e2e8f0] text-sm whitespace-pre-wrap">${entry.tasks}</p>
+                        <h4 class="text-xs uppercase tracking-wider text-on-surface-variant mb-1">Taken</h4>
+                        <p class="text-on-surface text-sm whitespace-pre-wrap">${entry.tasks}</p>
                     </div>
                     <div class="grid grid-cols-2 gap-4">
-                        <div class="bg-black/20 p-3 rounded border border-white/5">
-                            <h4 class="text-[10px] uppercase tracking-wider text-[#0ea5e9] mb-1">Wat ging goed:</h4>
-                            <p class="text-[#e2e8f0] text-xs">${entry.good}</p>
+                        <div class="bg-surface p-3 rounded border border-border">
+                            <h4 class="text-[10px] uppercase tracking-wider text-secondary mb-1">Wat ging goed:</h4>
+                            <p class="text-on-surface text-xs">${entry.good}</p>
                         </div>
-                        <div class="bg-black/20 p-3 rounded border border-white/5">
-                            <h4 class="text-[10px] uppercase tracking-wider text-[#0ea5e9] mb-1">Wat kan beter:</h4>
-                            <p class="text-[#e2e8f0] text-xs">${entry.bad}</p>
+                        <div class="bg-surface p-3 rounded border border-border">
+                            <h4 class="text-[10px] uppercase tracking-wider text-secondary mb-1">Wat kan beter:</h4>
+                            <p class="text-on-surface text-xs">${entry.bad}</p>
                         </div>
                     </div>
-                    <div class="bg-[#f43f5e]/10 border border-[#f43f5e]/20 p-4 rounded-lg mt-2 flex flex-col gap-2">
-                        <h4 class="text-xs uppercase tracking-wider text-[#f43f5e] font-bold flex items-center gap-1">
+                    <div class="bg-tertiary/10 border border-tertiary/20 p-4 rounded-lg mt-2 flex flex-col gap-2">
+                        <h4 class="text-xs uppercase tracking-wider text-tertiary font-bold flex items-center gap-1">
                             <span class="material-symbols-outlined text-[16px]">evidence</span> Bewijs
                         </h4>
-                        <p class="text-[#e2e8f0] text-sm">${entry.evidence_desc}</p>
-                        <a href="${entry.evidence_link}" target="_blank" class="text-sm text-[#0ea5e9] hover:underline font-mono truncate break-all">${entry.evidence_link}</a>
+                        <p class="text-on-surface text-sm">${entry.evidence_desc}</p>
+                        <a href="${entry.evidence_link}" target="_blank" class="text-sm text-secondary hover:underline font-mono truncate break-all">${entry.evidence_link}</a>
                     </div>
                 </div>
             `;
@@ -180,15 +196,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const renderProcessTags = () => {
         processTagsContainer.innerHTML = '';
         if (selectedProcesses.length === 0) {
-            processTagsContainer.innerHTML = '<span class="text-xs text-[#94a3b8] mt-1">Nog geen geselecteerd</span>';
+            processTagsContainer.innerHTML = '<span class="text-xs text-on-surface-variant mt-1">Nog geen geselecteerd</span>';
         }
         selectedProcesses.forEach((p, idx) => {
             const tag = document.createElement('div');
-            tag.className = 'bg-[#a855f7]/20 text-[#a855f7] px-2 py-1 rounded text-xs flex items-center gap-1 border border-[#a855f7]/30';
+            tag.className = 'bg-primary/20 text-primary px-2 py-1 rounded text-xs flex items-center gap-1 border border-primary/30';
             tag.innerHTML = `
-                ${p}
-                <button type="button" class="text-[#e2e8f0] hover:text-[#ef4444] ml-1" data-idx="${idx}"><span class="material-symbols-outlined text-[14px]">close</span></button>
+                <span class="cursor-pointer hover:underline" title="Klik om te bewerken">${p}</span>
+                <button type="button" class="text-on-surface hover:text-error ml-1" title="Verwijder"><span class="material-symbols-outlined text-[14px]">close</span></button>
             `;
+            
+            // Edit functionality
+            tag.querySelector('span').addEventListener('click', () => {
+                processSelect.value = p;
+                selectedProcesses.splice(idx, 1);
+                renderProcessTags();
+                processSelect.focus();
+            });
+
             // Remove functionality
             tag.querySelector('button').addEventListener('click', (e) => {
                 selectedProcesses.splice(idx, 1);
@@ -202,7 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (btnAddProcess && processSelect) {
         btnAddProcess.addEventListener('click', () => {
-            const val = processSelect.value;
+            const val = processSelect.value.trim();
             if (val && !selectedProcesses.includes(val)) {
                 selectedProcesses.push(val);
                 renderProcessTags();

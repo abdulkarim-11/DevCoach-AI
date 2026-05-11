@@ -16,10 +16,10 @@
       }
     </style>
   </head>
-  <body class="bg-[#0f172a] text-[#e2e8f0] font-sans min-h-screen flex flex-col antialiased selection:bg-[#a855f7]/30">
-    <header class="sticky top-0 z-50 border-b border-white/5 bg-[rgba(15,23,42,0.8)] backdrop-blur-xl">
+  <body class="bg-background text-on-surface font-sans min-h-screen flex flex-col antialiased selection:bg-primary/30">
+    <header class="sticky top-0 z-50 border-b border-border bg-surface backdrop-blur-xl">
       <div class="flex justify-between items-center w-full px-6 md:px-10 py-5 max-w-[1440px] mx-auto">
-        <div class="text-2xl font-bold text-[#a855f7] tracking-tight">DevCoach AI</div>
+        <div class="text-2xl font-bold text-primary tracking-tight">DevCoach AI</div>
         
         <nav class="hidden md:flex items-center gap-10">
           <button data-view="dashboard" class="nav-btn font-mono uppercase tracking-wider text-[13px] py-1 text-primary border-b-2 border-primary font-bold">Overzicht</button>
@@ -28,9 +28,13 @@
         </nav>
 
         <div class="flex items-center gap-4 text-on-surface-variant">
-          <button id="btn-export-pdf" class="hover:text-[#a855f7] transition-colors p-2 rounded-full hover:bg-white/5" title="Exporteer naar PDF"><span class="material-symbols-outlined text-[20px]">picture_as_pdf</span></button>
-          <button id="btn-export-json" class="hover:text-[#a855f7] transition-colors p-2 rounded-full hover:bg-white/5" title="Exporteer naar JSON"><span class="material-symbols-outlined text-[20px]">download</span></button>
-          <button class="hover:text-[#a855f7] transition-colors p-2 rounded-full hover:bg-white/5"><span class="material-symbols-outlined text-[20px]">notifications</span></button>
+          <button id="btn-theme-toggle" class="hover:text-primary transition-colors p-2 rounded-full hover:bg-border-hover" title="Toggle Theme">
+             <span class="material-symbols-outlined text-[20px] icon-dark">dark_mode</span>
+             <span class="material-symbols-outlined text-[20px] icon-light">light_mode</span>
+          </button>
+          <button id="btn-export-pdf" class="hover:text-primary transition-colors p-2 rounded-full hover:bg-border-hover" title="Exporteer naar PDF"><span class="material-symbols-outlined text-[20px]">picture_as_pdf</span></button>
+          <button id="btn-export-json" class="hover:text-primary transition-colors p-2 rounded-full hover:bg-border-hover" title="Exporteer naar JSON"><span class="material-symbols-outlined text-[20px]">download</span></button>
+          <button class="hover:text-primary transition-colors p-2 rounded-full hover:bg-border-hover"><span class="material-symbols-outlined text-[20px]">notifications</span></button>
         </div>
       </div>
     </header>
@@ -40,55 +44,55 @@
       <!-- DASHBOARD VIEW -->
       <div id="view-dashboard" class="view flex flex-col gap-10 w-full py-16 mx-auto" style="display: block;">
         <header class="flex flex-col gap-2">
-          <h1 id="dashboard-title" class="text-4xl text-[#e2e8f0] font-bold tracking-tight">Weekly Review</h1>
-          <p id="dashboard-subtitle" class="text-[#94a3b8] text-sm max-w-2xl">Jouw voortgang en ontwikkeling als software developer van deze week.</p>
+          <h1 id="dashboard-title" class="text-4xl text-on-surface font-bold tracking-tight">Weekly Review</h1>
+          <p id="dashboard-subtitle" class="text-on-surface-variant text-sm max-w-2xl">Jouw voortgang en ontwikkeling als software developer van deze week.</p>
         </header>
 
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6 items-stretch">
-          <div class="bg-[rgba(16,20,21,0.4)] backdrop-blur-xl border border-white/5 rounded-xl p-6">
-             <div class="font-mono text-[#94a3b8] uppercase text-xs mb-2">Totaal Uren</div>
-             <div id="stat-hours" class="text-3xl font-bold text-[#a855f7]">0</div>
+          <div class="bg-surface-container backdrop-blur-xl border border-border rounded-xl p-6">
+             <div class="font-mono text-on-surface-variant uppercase text-xs mb-2">Totaal Uren</div>
+             <div id="stat-hours" class="text-3xl font-bold text-primary">0</div>
           </div>
-          <div class="bg-[rgba(16,20,21,0.4)] backdrop-blur-xl border border-white/5 rounded-xl p-6">
-             <div class="font-mono text-[#94a3b8] uppercase text-xs mb-2">Aantal Logs</div>
-             <div id="stat-logs" class="text-3xl font-bold text-[#0ea5e9]">0</div>
+          <div class="bg-surface-container backdrop-blur-xl border border-border rounded-xl p-6">
+             <div class="font-mono text-on-surface-variant uppercase text-xs mb-2">Aantal Logs</div>
+             <div id="stat-logs" class="text-3xl font-bold text-secondary">0</div>
           </div>
-          <div class="bg-[rgba(16,20,21,0.4)] backdrop-blur-xl border border-white/5 rounded-xl p-6">
-             <div class="font-mono text-[#94a3b8] uppercase text-xs mb-2">Bewijsstukken</div>
-             <div id="stat-evidence" class="text-3xl font-bold text-[#f43f5e]">0</div>
+          <div class="bg-surface-container backdrop-blur-xl border border-border rounded-xl p-6">
+             <div class="font-mono text-on-surface-variant uppercase text-xs mb-2">Bewijsstukken</div>
+             <div id="stat-evidence" class="text-3xl font-bold text-tertiary">0</div>
           </div>
-          <div class="bg-[rgba(16,20,21,0.4)] backdrop-blur-xl border border-white/5 rounded-xl p-6">
-             <div class="font-mono text-[#94a3b8] uppercase text-xs mb-2">Gedekte Processen</div>
-             <div id="stat-processes" class="text-xl font-bold text-[#e2e8f0]">Geen</div>
+          <div class="bg-surface-container backdrop-blur-xl border border-border rounded-xl p-6">
+             <div class="font-mono text-on-surface-variant uppercase text-xs mb-2">Gedekte Processen</div>
+             <div id="stat-processes" class="text-xl font-bold text-on-surface">Geen</div>
           </div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
           <!-- Ontwikkeling & Tips -->
-          <div class="bg-[rgba(16,20,21,0.4)] backdrop-blur-xl border border-white/5 rounded-xl overflow-hidden relative flex flex-col p-6">
-             <h2 class="font-mono uppercase text-[#a855f7] tracking-wider mb-4 flex items-center gap-2 text-sm border-b border-white/5 pb-2">
+          <div class="bg-surface-container backdrop-blur-xl border border-border rounded-xl overflow-hidden relative flex flex-col p-6">
+             <h2 class="font-mono uppercase text-primary tracking-wider mb-4 flex items-center gap-2 text-sm border-b border-border pb-2">
                 <span class="material-symbols-outlined text-[18px]">insights</span> Analyse & Tips (Coach)
              </h2>
-             <div class="text-sm text-[#e2e8f0] flex flex-col gap-4">
+             <div class="text-sm text-on-surface flex flex-col gap-4">
                 <p id="dashboard-analysis">Nog onvoldoende data voor een wekelijkse analyse. Vul meer logboeken in.</p>
-                <div class="bg-black/20 p-4 rounded-lg border border-white/5">
-                   <h3 class="font-bold text-[#0ea5e9] mb-2 text-xs uppercase tracking-wider">Ontbrekende Werkprocessen:</h3>
-                   <p id="dashboard-missing-processes" class="text-[#94a3b8]">B1-K1-W1 (Analyseren), B1-K1-W4 (Opleveren)</p>
+                <div class="bg-surface-container p-4 rounded-lg border border-border">
+                   <h3 class="font-bold text-secondary mb-2 text-xs uppercase tracking-wider">Ontbrekende Werkprocessen:</h3>
+                   <p id="dashboard-missing-processes" class="text-on-surface-variant">B1-K1-W1 (Analyseren), B1-K1-W4 (Opleveren)</p>
                 </div>
-                <div class="bg-black/20 p-4 rounded-lg border border-white/5">
-                   <h3 class="font-bold text-[#ef4444] mb-2 text-xs uppercase tracking-wider">Tip voor verbetering:</h3>
+                <div class="bg-surface-container p-4 rounded-lg border border-border">
+                   <h3 class="font-bold text-error mb-2 text-xs uppercase tracking-wider">Tip voor verbetering:</h3>
                    <p>Zorg dat je bewijslast visueel maakt ter onderbouwing van je gerealiseerde code. Gebruik de STARR-methode beter in je reflectie.</p>
                 </div>
              </div>
           </div>
 
           <!-- Recente Activiteit -->
-          <div class="bg-[rgba(16,20,21,0.4)] backdrop-blur-xl border border-white/5 rounded-xl relative flex flex-col p-6">
-             <h2 class="font-mono uppercase text-[#e2e8f0] tracking-wider mb-4 flex items-center gap-2 text-sm border-b border-white/5 pb-2">
+          <div class="bg-surface-container backdrop-blur-xl border border-border rounded-xl relative flex flex-col p-6">
+             <h2 class="font-mono uppercase text-on-surface tracking-wider mb-4 flex items-center gap-2 text-sm border-b border-border pb-2">
                 <span class="material-symbols-outlined text-[18px]">history</span> Recente Entries
              </h2>
              <div id="dashboard-recent-list" class="flex flex-col gap-3 overflow-y-auto max-h-[300px]">
-                <p class="text-[#94a3b8] text-sm">Geen recente logs gevonden.</p>
+                <p class="text-on-surface-variant text-sm">Geen recente logs gevonden.</p>
              </div>
           </div>
         </div>
@@ -97,90 +101,90 @@
       <!-- LOGBOOK VIEW -->
       <div id="view-logbook" class="view flex flex-col gap-6 w-full py-8 md:py-16 mx-auto" style="display: none;">
         <header class="flex flex-col gap-2 mb-4">
-          <h1 class="text-4xl text-[#e2e8f0] font-bold tracking-tight">Logboek Invullen</h1>
-          <p class="text-[#94a3b8] text-sm">Registreer je uren, specifieke taken, reflectie en bewijs.</p>
+          <h1 class="text-4xl text-on-surface font-bold tracking-tight">Logboek Invullen</h1>
+          <p class="text-on-surface-variant text-sm">Registreer je uren, specifieke taken, reflectie en bewijs.</p>
         </header>
 
         <form id="form-logbook" class="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-8">
           
           <!-- Kolom 1 -->
           <div class="flex flex-col gap-6">
-             <div class="bg-[rgba(16,20,21,0.4)] p-6 rounded-xl border border-white/5 flex flex-col gap-4">
-                <h3 class="font-mono text-[#a855f7] uppercase tracking-wider text-xs border-b border-[#a855f7]/30 pb-2">Basis Info</h3>
+             <div class="bg-surface-container p-6 rounded-xl border border-border flex flex-col gap-4">
+                <h3 class="font-mono text-primary uppercase tracking-wider text-xs border-b border-primary/30 pb-2">Basis Info</h3>
                 <div class="flex gap-4">
                    <div class="flex-1">
-                      <label class="block text-xs text-[#94a3b8] mb-1">Datum</label>
-                      <input type="date" id="input-date" required class="w-full bg-black/40 border border-[#334155] rounded px-3 py-2 text-sm text-[#e2e8f0] focus:border-[#a855f7] outline-none" />
+                      <label class="block text-xs text-on-surface-variant mb-1">Datum</label>
+                      <input type="date" id="input-date" required class="w-full bg-input border border-border rounded px-3 py-2 text-sm text-on-surface focus:border-primary outline-none" />
                    </div>
                    <div class="w-32">
-                      <label class="block text-xs text-[#94a3b8] mb-1">Uren</label>
-                      <input type="number" id="input-hours" required min="0.5" step="0.5" placeholder="bijv. 4.5" class="w-full bg-black/40 border border-[#334155] rounded px-3 py-2 text-sm text-[#e2e8f0] focus:border-[#a855f7] outline-none" />
+                      <label class="block text-xs text-on-surface-variant mb-1">Uren</label>
+                      <input type="number" id="input-hours" required min="0.5" step="0.5" placeholder="bijv. 4.5" class="w-full bg-input border border-border rounded px-3 py-2 text-sm text-on-surface focus:border-primary outline-none" />
                    </div>
                 </div>
 
                 <div>
-                   <label class="block text-xs text-[#94a3b8] mb-1 flex justify-between">
+                   <label class="block text-xs text-on-surface-variant mb-1 flex justify-between">
                      <span>Concrete Taken (Wees specifiek!)</span>
-                     <span id="task-feedback" class="text-[#ef4444] font-bold text-[10px] hidden">Te algemeen! Voorbeeld: "Login API gebouwd."</span>
+                     <span id="task-feedback" class="text-error font-bold text-[10px] hidden">Te algemeen! Voorbeeld: "Login API gebouwd."</span>
                    </label>
-                   <textarea id="input-tasks" required rows="4" placeholder="Niet goed: 'Aan de app gewerkt'&#10;Wel goed: 'Een loginformulier gemaakt met validatie op lege velden.'" class="w-full bg-black/40 border border-[#334155] rounded px-3 py-2 text-sm text-[#e2e8f0] focus:border-[#a855f7] outline-none resize-none"></textarea>
+                   <textarea id="input-tasks" required rows="4" placeholder="Niet goed: 'Aan de app gewerkt'&#10;Wel goed: 'Een loginformulier gemaakt met validatie op lege velden.'" class="w-full bg-input border border-border rounded px-3 py-2 text-sm text-on-surface focus:border-primary outline-none resize-none"></textarea>
                 </div>
              </div>
 
-             <div class="bg-[rgba(16,20,21,0.4)] p-6 rounded-xl border border-white/5 flex flex-col gap-4">
-                <h3 class="font-mono text-[#0ea5e9] uppercase tracking-wider text-xs border-b border-[#0ea5e9]/30 pb-2">Reflectie</h3>
+             <div class="bg-surface-container p-6 rounded-xl border border-border flex flex-col gap-4">
+                <h3 class="font-mono text-secondary uppercase tracking-wider text-xs border-b border-secondary/30 pb-2">Reflectie</h3>
                 <div>
-                   <label class="block text-xs text-[#94a3b8] mb-1">Wat ging er goed?</label>
-                   <textarea id="input-good" required rows="2" class="w-full bg-black/40 border border-[#334155] rounded px-3 py-2 text-sm text-[#e2e8f0] focus:border-[#0ea5e9] outline-none resize-none"></textarea>
+                   <label class="block text-xs text-on-surface-variant mb-1">Wat ging er goed?</label>
+                   <textarea id="input-good" required rows="2" class="w-full bg-input border border-border rounded px-3 py-2 text-sm text-on-surface focus:border-secondary outline-none resize-none"></textarea>
                 </div>
                 <div>
-                   <label class="block text-xs text-[#94a3b8] mb-1">Wat kan er beter?</label>
-                   <textarea id="input-bad" required rows="2" class="w-full bg-black/40 border border-[#334155] rounded px-3 py-2 text-sm text-[#e2e8f0] focus:border-[#0ea5e9] outline-none resize-none"></textarea>
+                   <label class="block text-xs text-on-surface-variant mb-1">Wat kan er beter?</label>
+                   <textarea id="input-bad" required rows="2" class="w-full bg-input border border-border rounded px-3 py-2 text-sm text-on-surface focus:border-secondary outline-none resize-none"></textarea>
                 </div>
              </div>
           </div>
 
           <!-- Kolom 2 -->
           <div class="flex flex-col gap-6">
-             <div class="bg-[rgba(16,20,21,0.4)] p-6 rounded-xl border border-white/5 flex flex-col gap-4">
-                <h3 class="font-mono text-[#f43f5e] uppercase tracking-wider text-xs border-b border-[#f43f5e]/30 pb-2 flex justify-between items-center">
+             <div class="bg-surface-container p-6 rounded-xl border border-border flex flex-col gap-4">
+                <h3 class="font-mono text-tertiary uppercase tracking-wider text-xs border-b border-tertiary/30 pb-2 flex justify-between items-center">
                    Bewijslast
-                   <span class="text-[10px] bg-[#f43f5e]/20 text-[#f43f5e] px-2 py-0.5 rounded">Vereist</span>
+                   <span class="text-[10px] bg-tertiary/20 text-tertiary px-2 py-0.5 rounded">Vereist</span>
                 </h3>
-                <p class="text-xs text-[#94a3b8]">Zonder bewijs is een taak niet compleet.</p>
+                <p class="text-xs text-on-surface-variant">Zonder bewijs is een taak niet compleet.</p>
                 <div>
-                   <label class="block text-xs text-[#94a3b8] mb-1">Link (GitHub, Drive, Figma, Server)</label>
-                   <input type="url" id="input-evidence-link" required placeholder="https://github.com/..." class="w-full bg-black/40 border border-[#334155] rounded px-3 py-2 text-sm text-[#e2e8f0] focus:border-[#f43f5e] outline-none" />
+                   <label class="block text-xs text-on-surface-variant mb-1">Link (GitHub, Drive, Figma, Server)</label>
+                   <input type="url" id="input-evidence-link" required placeholder="https://github.com/..." class="w-full bg-input border border-border rounded px-3 py-2 text-sm text-on-surface focus:border-tertiary outline-none" />
                 </div>
                 <div>
-                   <label class="block text-xs text-[#94a3b8] mb-1">Korte toelichting bewijs</label>
-                   <textarea id="input-evidence-desc" required rows="2" placeholder="Wat is hier te zien?" class="w-full bg-black/40 border border-[#334155] rounded px-3 py-2 text-sm text-[#e2e8f0] focus:border-[#f43f5e] outline-none resize-none"></textarea>
+                   <label class="block text-xs text-on-surface-variant mb-1">Korte toelichting bewijs</label>
+                   <textarea id="input-evidence-desc" required rows="2" placeholder="Wat is hier te zien?" class="w-full bg-input border border-border rounded px-3 py-2 text-sm text-on-surface focus:border-tertiary outline-none resize-none"></textarea>
                 </div>
              </div>
 
-             <div class="bg-[rgba(16,20,21,0.4)] p-6 rounded-xl border border-white/5 flex flex-col gap-4">
-                <h3 class="font-mono text-[#a855f7] uppercase tracking-wider text-xs border-b border-[#a855f7]/30 pb-2">Werkprocessen</h3>
+             <div class="bg-surface-container p-6 rounded-xl border border-border flex flex-col gap-4">
+                <h3 class="font-mono text-primary uppercase tracking-wider text-xs border-b border-primary/30 pb-2">Werkprocessen</h3>
                 <div>
-                   <label class="block text-xs text-[#94a3b8] mb-1">Koppel werkprocessen (Selecteer of voeg toe)</label>
+                   <label class="block text-xs text-on-surface-variant mb-1">Koppel werkprocessen (Selecteer of voeg toe)</label>
                    <div class="flex gap-2 mb-2">
-                       <select id="input-process-select" class="flex-1 bg-black/40 border border-[#334155] rounded px-3 py-2 text-sm text-[#e2e8f0] outline-none">
-                           <option value="">-- Kies een proces --</option>
-                           <option value="B1-K1-W1">B1-K1-W1 (Requirements)</option>
-                           <option value="B1-K1-W2">B1-K1-W2 (Ontwerp maken)</option>
-                           <option value="B1-K1-W3">B1-K1-W3 (Realiseren)</option>
-                           <option value="B1-K1-W4">B1-K1-W4 (Testen)</option>
-                           <option value="B1-K1-W5">B1-K1-W5 (Opleveren)</option>
-                       </select>
-                       <button type="button" id="btn-add-process" class="bg-[#334155] hover:bg-[#475569] text-white px-3 py-2 rounded text-sm transition-colors">Voeg toe</button>
+                       <input list="process-list" id="input-process-select" placeholder="Zoek of typ een werkproces..." class="flex-1 bg-input border border-border rounded px-3 py-2 text-sm text-on-surface outline-none" autocomplete="off" />
+                       <datalist id="process-list">
+                           <option value="B1-K1-W1 (Requirements)"></option>
+                           <option value="B1-K1-W2 (Ontwerp maken)"></option>
+                           <option value="B1-K1-W3 (Realiseren)"></option>
+                           <option value="B1-K1-W4 (Testen)"></option>
+                           <option value="B1-K1-W5 (Opleveren)"></option>
+                       </datalist>
+                       <button type="button" id="btn-add-process" class="bg-border hover:bg-border-hover text-on-surface px-3 py-2 rounded text-sm transition-colors cursor-pointer">Voeg toe</button>
                    </div>
-                   <div id="process-tags" class="flex flex-wrap gap-2 min-h-[32px] p-2 bg-black/20 rounded border border-[#334155]">
+                   <div id="process-tags" class="flex flex-wrap gap-2 min-h-[32px] p-2 bg-surface-container rounded border border-border">
                       <!-- Process tags inject here -->
                    </div>
                 </div>
              </div>
              
              <div class="mt-auto">
-                <button type="submit" class="w-full bg-[#a855f7] hover:bg-[#8b5cf6] text-white font-bold py-3 rounded-lg shadow-[0_0_15px_rgba(168,85,247,0.4)] transition-all flex justify-center items-center gap-2">
+                <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-[var(--color-on-primary,white)] font-bold py-3 rounded-lg shadow-[0_0_15px_var(--color-primary)] transition-all flex justify-center items-center gap-2 cursor-pointer">
                    <span class="material-symbols-outlined text-[20px]">save</span> Logboek Indienen en Opslaan
                 </button>
              </div>
@@ -191,8 +195,8 @@
       <!-- EVIDENCE VIEW -->
       <div id="view-evidence" class="view flex flex-col gap-6 w-full py-8 md:py-16 mx-auto" style="display: none;">
         <header class="flex flex-col gap-2 mb-6">
-          <h1 class="text-4xl text-[#e2e8f0] font-bold tracking-tight">Opgeslagen Bewijslast</h1>
-          <p class="text-[#94a3b8] text-sm max-w-2xl">Al jouw gekoppelde werkprocessen, taken en bewijzen op één plek.</p>
+          <h1 class="text-4xl text-on-surface font-bold tracking-tight">Opgeslagen Bewijslast</h1>
+          <p class="text-on-surface-variant text-sm max-w-2xl">Al jouw gekoppelde werkprocessen, taken en bewijzen op één plek.</p>
         </header>
 
         <div id="evidence-list" class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
@@ -202,12 +206,12 @@
     </main>
 
     <!-- Mobile Nav -->
-    <nav class="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-4 rounded-full px-4 py-2 border border-white/10 shadow-[0_0_20px_rgba(168,85,247,0.1)] bg-[rgba(25,28,30,0.8)] backdrop-blur-lg">
-      <button data-view="dashboard" class="mobile-nav-btn p-2.5 flex flex-col items-center justify-center rounded-full transition-all bg-primary text-on-primary scale-110 shadow-[0_0_15px_rgba(168,85,247,0.4)]"><span class="material-symbols-outlined text-[18px]">terminal</span></button>
-      <button data-view="evidence" class="mobile-nav-btn p-2.5 flex flex-col items-center justify-center rounded-full transition-all text-on-surface-variant hover:text-on-surface hover:bg-white/5 bg-transparent"><span class="material-symbols-outlined text-[18px]">description</span></button>
-      <button data-view="logbook" class="mobile-nav-btn p-2.5 flex flex-col items-center justify-center rounded-full transition-all text-on-surface-variant hover:text-on-surface hover:bg-white/5 bg-transparent"><span class="material-symbols-outlined text-[18px]">menu_book</span></button>
-      <button class="p-2.5 flex flex-col items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-white/5 rounded-full transition-all bg-transparent"><span class="material-symbols-outlined text-[18px]">insights</span></button>
-      <button class="p-2.5 flex flex-col items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-white/5 rounded-full transition-all bg-transparent"><span class="material-symbols-outlined text-[18px]">settings</span></button>
+    <nav class="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-4 rounded-full px-4 py-2 border border-border shadow-[0_0_20px_var(--color-primary)] bg-surface backdrop-blur-lg">
+      <button data-view="dashboard" class="mobile-nav-btn p-2.5 flex flex-col items-center justify-center rounded-full transition-all bg-primary text-[var(--color-on-primary,white)] scale-110 shadow-[0_0_15px_var(--color-primary)]"><span class="material-symbols-outlined text-[18px]">terminal</span></button>
+      <button data-view="evidence" class="mobile-nav-btn p-2.5 flex flex-col items-center justify-center rounded-full transition-all text-on-surface-variant hover:text-on-surface hover:bg-border-hover bg-transparent"><span class="material-symbols-outlined text-[18px]">description</span></button>
+      <button data-view="logbook" class="mobile-nav-btn p-2.5 flex flex-col items-center justify-center rounded-full transition-all text-on-surface-variant hover:text-on-surface hover:bg-border-hover bg-transparent"><span class="material-symbols-outlined text-[18px]">menu_book</span></button>
+      <button class="p-2.5 flex flex-col items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-border-hover rounded-full transition-all bg-transparent"><span class="material-symbols-outlined text-[18px]">insights</span></button>
+      <button class="p-2.5 flex flex-col items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-border-hover rounded-full transition-all bg-transparent"><span class="material-symbols-outlined text-[18px]">settings</span></button>
     </nav>
     <script type="module" src="/src/main.js"></script>
   </body>

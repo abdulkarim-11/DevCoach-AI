@@ -2,19 +2,18 @@
 @import "tailwindcss";
 
 @theme {
-    --color-background: #0f172a;
-    --color-surface: #0f172a;
-    --color-surface-container: rgba(16, 20, 21, 0.4);
-    --color-surface-container-low: rgba(25, 28, 30, 0.4);
-    --color-on-surface: #e2e8f0;
-    --color-on-surface-variant: #94a3b8;
-    --color-primary: #a855f7;
-    --color-on-primary: #ffffff;
-    --color-secondary: #0ea5e9;
-    --color-tertiary: #f43f5e;
-    --color-error: #ef4444;
-    --color-outline: #475569;
-    --color-outline-variant: #334155;
+    --color-background: var(--bg-color);
+    --color-surface: var(--surface-color);
+    --color-surface-container: var(--surface-container-color);
+    --color-on-surface: var(--text-color);
+    --color-on-surface-variant: var(--text-muted);
+    --color-primary: var(--primary-color);
+    --color-secondary: var(--secondary-color);
+    --color-tertiary: var(--tertiary-color);
+    --color-error: var(--error-color);
+    --color-border: var(--border-color);
+    --color-border-hover: var(--border-hover-color);
+    --color-input: var(--input-bg);
 
     --font-sans: "Manrope", sans-serif;
     --font-mono-ui: "Space Grotesk", sans-serif;
@@ -41,10 +40,48 @@
     to { transform: rotate(0deg); }
 }
 
-body {
-    background-color: var(--color-background);
-    color: var(--color-on-surface);
+:root {
+    --bg-color: #f8fafc;
+    --surface-color: rgba(255, 255, 255, 0.8);
+    --surface-container-color: #ffffff;
+    --text-color: #0f172a;
+    --text-muted: #475569;
+    --primary-color: #9333ea;
+    --secondary-color: #0284c7;
+    --tertiary-color: #e11d48;
+    --error-color: #dc2626;
+    --border-color: rgba(0, 0, 0, 0.1);
+    --border-hover-color: rgba(0, 0, 0, 0.05);
+    --input-bg: #f1f5f9;
 }
+
+.dark {
+    --bg-color: #0f172a;
+    --surface-color: rgba(15, 23, 42, 0.8);
+    --surface-container-color: rgba(16, 20, 21, 0.4);
+    --text-color: #e2e8f0;
+    --text-muted: #94a3b8;
+    --primary-color: #a855f7;
+    --secondary-color: #0ea5e9;
+    --tertiary-color: #f43f5e;
+    --error-color: #ef4444;
+    --border-color: rgba(255, 255, 255, 0.05);
+    --border-hover-color: rgba(255, 255, 255, 0.1);
+    --input-bg: rgba(0, 0, 0, 0.4);
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+:root .icon-light { display: none; }
+:root .icon-dark { display: block; }
+
+.dark .icon-light { display: block; }
+.dark .icon-dark { display: none; }
+
 
 .glass-panel {
     background: rgba(15, 23, 42, 0.6);
