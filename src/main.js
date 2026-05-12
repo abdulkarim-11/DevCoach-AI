@@ -2,9 +2,19 @@ import './index.css';
 
 document.addEventListener('DOMContentLoaded', () => {
     // ==== DATA MANAGEMENT ====
-    const STORAGE_KEY = 'devcoach_data';
-    let journalData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    let journalData = [];
     let selectedProcesses = [];
+
+    const loadData = async () => {
+        try {
+            const res = await fetch('/api/logs');
+            journalData = await res.json();
+            if (currentView === 'dashboard') renderDashboard();
+            if (currentView === 'evidence') renderEvidence();
+        } catch (err) {
+            console.error("Failed to load logs:", err);
+        }
+    }
 
     // ==== VIEW MANAGEMENT ====
     const views = ['dashboard', 'logbook', 'evidence'];
@@ -237,7 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (form) {
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
             // Task validation logic
@@ -265,17 +275,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 processes: [...selectedProcesses]
             };
 
-            journalData.push(newEntry);
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(journalData));
+            try {
+                const res = await fetch('/api/logs', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newEntry)
+                });
+                
+                if (!res.ok) throw new Error('Failed to save log');
+                
+                await loadData();
 
-            // Reset form
-            form.reset();
-            selectedProcesses = [];
-            renderProcessTags();
-            document.getElementById('input-date').value = new Date().toISOString().split('T')[0];
-            
-            alert('Logboek is succesvol opgeslagen!');
-            switchView('evidence');
+                // Reset form
+                form.reset();
+                selectedProcesses = [];
+                renderProcessTags();
+                document.getElementById('input-date').value = new Date().toISOString().split('T')[0];
+                
+                alert('Logboek is succesvol opgeslagen in SQL!');
+                switchView('evidence');
+            } catch (err) {
+                console.error(err);
+                alert("Er ging iets mis bij het opslaan.");
+            }
         });
     }
 
@@ -318,7 +340,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initial render
     checkReminder();
-    renderDashboard(); // prepare data
+    loadData(); // load data from API
     switchView(currentView);
 
 });
