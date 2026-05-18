@@ -1,6 +1,32 @@
 import './index.css';
 
 document.addEventListener('DOMContentLoaded', () => {
+    // ==== UI UTILS ====
+    const showToast = (message, type = 'success') => {
+        const container = document.getElementById('toast-container');
+        if (!container) return;
+        
+        const toast = document.createElement('div');
+        const icon = type === 'success' ? 'check_circle' : (type === 'error' ? 'error' : 'info');
+        const colorClass = type === 'success' ? 'text-primary' : (type === 'error' ? 'text-error' : 'text-secondary');
+        
+        toast.className = `bg-surface border border-border shadow-[0_4px_20px_rgba(0,0,0,0.1)] rounded-full px-4 py-2 flex items-center gap-2 text-sm text-on-surface transform transition-all duration-300 translate-y-4 opacity-0 pointer-events-auto`;
+        toast.innerHTML = `<span class="material-symbols-outlined text-[18px] ${colorClass}">${icon}</span> ${message}`;
+        
+        container.appendChild(toast);
+        
+        // Animate in
+        requestAnimationFrame(() => {
+            toast.classList.remove('translate-y-4', 'opacity-0');
+        });
+        
+        // Remove after 3s
+        setTimeout(() => {
+            toast.classList.add('translate-y-4', 'opacity-0');
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    };
+
     // ==== DATA MANAGEMENT ====
     let journalData = [];
     let selectedProcesses = [];
@@ -292,11 +318,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 renderProcessTags();
                 document.getElementById('input-date').value = new Date().toISOString().split('T')[0];
                 
-                alert('Logboek is succesvol opgeslagen in SQL!');
+                showToast('Logboek is succesvol opgeslagen in SQL!', 'success');
                 switchView('evidence');
             } catch (err) {
                 console.error(err);
-                alert("Er ging iets mis bij het opslaan.");
+                showToast("Er ging iets mis bij het opslaan.", 'error');
             }
         });
     }
@@ -332,7 +358,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const today = new Date().toISOString().split('T')[0];
         if (lastLogin !== today) {
             setTimeout(() => {
-                alert("Reminder: Vergeet niet om je logboek voor vandaag in te vullen!");
+                showToast("Reminder: Vergeet niet om je logboek voor vandaag in te vullen!", 'info');
                 localStorage.setItem('last_login_date', today);
             }, 2000);
         }
