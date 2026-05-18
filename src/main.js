@@ -63,10 +63,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // Update nav active states (desktop)
         document.querySelectorAll('.nav-btn').forEach(btn => {
             if (btn.dataset.view === viewId) {
-                btn.classList.add('text-primary', 'border-primary', 'font-bold');
+                btn.classList.add('text-on-surface', 'border-primary');
                 btn.classList.remove('text-on-surface-variant', 'border-transparent');
             } else {
-                btn.classList.remove('text-primary', 'border-primary', 'font-bold');
+                btn.classList.remove('text-on-surface', 'border-primary');
                 btn.classList.add('text-on-surface-variant', 'border-transparent');
             }
         });
@@ -74,10 +74,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // Mobile nav active states
         document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
             if (btn.dataset.view === viewId) {
-                btn.classList.add('bg-primary', 'text-[var(--color-on-primary,white)]', 'scale-110', 'shadow-[0_0_15px_var(--color-primary)]');
+                btn.classList.add('bg-primary', 'text-[var(--color-on-primary,white)]');
                 btn.classList.remove('text-on-surface-variant', 'bg-transparent');
             } else {
-                btn.classList.remove('bg-primary', 'text-[var(--color-on-primary,white)]', 'scale-110', 'shadow-[0_0_15px_var(--color-primary)]');
+                btn.classList.remove('bg-primary', 'text-[var(--color-on-primary,white)]');
                 btn.classList.add('text-on-surface-variant', 'bg-transparent');
             }
         });
@@ -154,12 +154,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const recent = [...journalData].reverse().slice(0, 5); // top 5
             recent.forEach(entry => {
                 listEl.innerHTML += `
-                    <div class="flex flex-col gap-1 border-b border-border pb-2">
+                    <div class="flex flex-col gap-1.5 border-b border-border pb-3">
                         <div class="flex justify-between items-center">
-                            <span class="text-on-surface text-sm font-bold">${entry.date}</span>
-                            <span class="text-primary text-xs font-mono">${entry.hours} uur</span>
+                            <span class="text-on-surface font-medium">${entry.date}</span>
+                            <span class="text-on-surface-variant text-sm font-mono bg-input px-2 py-0.5 rounded-md border border-border">${entry.hours} uur</span>
                         </div>
-                        <p class="text-on-surface-variant text-xs truncate w-full" title="${entry.tasks}">${entry.tasks}</p>
+                        <p class="text-on-surface-variant text-sm truncate w-full" title="${entry.tasks}">${entry.tasks}</p>
                     </div>
                 `;
             });
@@ -177,39 +177,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const entries = [...journalData].reverse();
         entries.forEach((entry, idx) => {
-            const processesHTML = entry.processes.map(p => `<span class="bg-primary/20 text-primary px-2 py-0.5 rounded text-[10px] font-mono border border-primary/30">${p}</span>`).join('');
+            const processesHTML = entry.processes.map(p => `<span class="bg-input text-on-surface-variant px-2 py-0.5 rounded-md text-[11px] uppercase font-bold tracking-wider border border-border mt-1">${p}</span>`).join('');
             
             listEl.innerHTML += `
-                <div class="bg-surface-container backdrop-blur-xl border border-border rounded-xl p-6 flex flex-col gap-4">
-                    <div class="flex justify-between items-start border-b border-border pb-3">
+                <div class="bg-surface border border-border hover:border-border-hover transition-colors rounded-lg p-6 flex flex-col gap-5 shadow-sm">
+                    <div class="flex justify-between items-start border-b border-border pb-4">
                         <div>
                             <div class="text-on-surface font-bold text-lg">${entry.date}</div>
-                            <div class="text-on-surface-variant text-xs font-mono">${entry.hours} uur besteed</div>
+                            <div class="text-on-surface-variant font-medium text-sm mt-1">${entry.hours} uur besteed</div>
                         </div>
-                        <div class="flex flex-wrap max-w-[150px] justify-end gap-1">
+                        <div class="flex flex-wrap max-w-[200px] justify-end gap-1.5">
                             ${processesHTML}
                         </div>
                     </div>
                     <div>
-                        <h4 class="text-xs uppercase tracking-wider text-on-surface-variant mb-1">Taken</h4>
-                        <p class="text-on-surface text-sm whitespace-pre-wrap">${entry.tasks}</p>
+                        <h4 class="text-xs uppercase font-bold tracking-wider text-on-surface-variant mb-2">Taken</h4>
+                        <p class="text-on-surface text-sm leading-relaxed whitespace-pre-wrap">${entry.tasks}</p>
                     </div>
                     <div class="grid grid-cols-2 gap-4">
-                        <div class="bg-surface p-3 rounded border border-border">
-                            <h4 class="text-[10px] uppercase tracking-wider text-secondary mb-1">Wat ging goed:</h4>
-                            <p class="text-on-surface text-xs">${entry.good}</p>
+                        <div class="bg-input p-4 rounded-md border border-border">
+                            <h4 class="text-[10px] uppercase font-bold tracking-wider text-on-surface-variant mb-2 flex items-center gap-1.5"><span class="material-symbols-outlined text-[14px] text-green-500">thumb_up</span> Wat ging goed</h4>
+                            <p class="text-on-surface text-sm leading-relaxed">${entry.good}</p>
                         </div>
-                        <div class="bg-surface p-3 rounded border border-border">
-                            <h4 class="text-[10px] uppercase tracking-wider text-secondary mb-1">Wat kan beter:</h4>
-                            <p class="text-on-surface text-xs">${entry.bad}</p>
+                        <div class="bg-input p-4 rounded-md border border-border">
+                            <h4 class="text-[10px] uppercase font-bold tracking-wider text-on-surface-variant mb-2 flex items-center gap-1.5"><span class="material-symbols-outlined text-[14px] text-orange-500">trending_up</span> Wat kan beter</h4>
+                            <p class="text-on-surface text-sm leading-relaxed">${entry.bad}</p>
                         </div>
                     </div>
-                    <div class="bg-tertiary/10 border border-tertiary/20 p-4 rounded-lg mt-2 flex flex-col gap-2">
-                        <h4 class="text-xs uppercase tracking-wider text-tertiary font-bold flex items-center gap-1">
+                    <div class="bg-input border border-border p-4 rounded-md mt-2 flex flex-col gap-2 relative overflow-hidden">
+                        <div class="absolute inset-y-0 left-0 w-1 bg-primary"></div>
+                        <h4 class="text-xs uppercase font-bold tracking-wider text-on-surface mb-1 flex items-center gap-1.5">
                             <span class="material-symbols-outlined text-[16px]">evidence</span> Bewijs
                         </h4>
-                        <p class="text-on-surface text-sm">${entry.evidence_desc}</p>
-                        <a href="${entry.evidence_link}" target="_blank" class="text-sm text-secondary hover:underline font-mono truncate break-all">${entry.evidence_link}</a>
+                        <p class="text-on-surface-variant text-sm block mb-1">${entry.evidence_desc}</p>
+                        <a href="${entry.evidence_link}" target="_blank" class="text-sm text-primary hover:underline font-mono truncate break-all">${entry.evidence_link}</a>
                     </div>
                 </div>
             `;
@@ -236,10 +237,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         selectedProcesses.forEach((p, idx) => {
             const tag = document.createElement('div');
-            tag.className = 'bg-primary/20 text-primary px-2 py-1 rounded text-xs flex items-center gap-1 border border-primary/30';
+            tag.className = 'bg-surface text-on-surface font-medium px-2.5 py-1 rounded-md text-xs flex items-center gap-1.5 border border-border';
             tag.innerHTML = `
                 <span class="cursor-pointer hover:underline" title="Klik om te bewerken">${p}</span>
-                <button type="button" class="text-on-surface hover:text-error ml-1" title="Verwijder"><span class="material-symbols-outlined text-[14px]">close</span></button>
+                <button type="button" class="text-on-surface-variant hover:text-error transition-colors flex items-center" title="Verwijder"><span class="material-symbols-outlined text-[14px]">close</span></button>
             `;
             
             // Edit functionality

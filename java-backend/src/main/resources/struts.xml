@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 7.0//EN"
+    "https://struts.apache.org/dtds/struts-7.0.dtd">
+
+<struts>
+    <constant name="struts.devMode" value="true" />
+    <constant name="struts.action.extension" value="," />
+
+    <package name="api" extends="json-default" namespace="/api">
+        
+        <action name="logs" class="nl.delphinity.devcoach.actions.JournalEntryAction" method="getAllLogs">
+            <result type="json">
+                <param name="root">logs</param>
+            </result>
+        </action>
+
+        <action name="saveLog" class="nl.delphinity.devcoach.actions.JournalEntryAction" method="saveLog">
+            <interceptor-ref name="json">
+                <param name="root">log</param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultStack"/>
+            <result type="json">
+                <param name="root">message</param>
+            </result>
+        </action>
+
+        <action name="deleteLog" class="nl.delphinity.devcoach.actions.JournalEntryAction" method="deleteLog">
+            <result type="json">
+                <param name="root">message</param>
+            </result>
+        </action>
+
+    </package>
+</struts>

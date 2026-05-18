@@ -1,4 +1,4 @@
-package com.devcoach.entity;
+package nl.delphinity.devcoach.domain;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
@@ -31,12 +31,19 @@ public class JournalEntry {
     @Column(name = "evidence_desc", columnDefinition = "TEXT")
     private String evidence_desc;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "entry_processes", joinColumns = @JoinColumn(name = "entry_id"))
     @Column(name = "process_name")
     private List<String> processes;
 
     public JournalEntry() {}
+
+    public JournalEntry(String id, LocalDate date, double hours, String tasks) {
+        this.id = id;
+        this.date = date;
+        this.hours = hours;
+        this.tasks = tasks;
+    }
 
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
