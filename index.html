@@ -4,16 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DevCoach AI</title>
-    <!-- Material Icons for icons instead of Lucide React -->
+    <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
     <style>
       @media print {
         body { background: white; color: black; }
         nav, header, button, .mobile-nav-btn { display: none !important; }
-        .bg-[#0f172a] { background: transparent !important; }
-        .text-[#e2e8f0] { color: black !important; }
-        * { box-shadow: none !important; }
+        .bg-background, .bg-surface { background: transparent !important; border: 1px solid #ccc; box-shadow: none !important; }
+        .text-on-surface { color: black !important; }
       }
+      .ring-progress circle { transition: stroke-dashoffset 1s ease-out; }
     </style>
   </head>
   <body class="bg-background text-on-surface min-h-screen flex flex-col antialiased selection:bg-primary/30">
@@ -25,7 +25,7 @@
         </div>
         
         <nav class="hidden md:flex items-center gap-8">
-          <button data-view="dashboard" class="nav-btn text-sm font-medium py-1 transition-colors border-b-2">Overzicht</button>
+          <button data-view="dashboard" class="nav-btn text-sm font-medium py-1 transition-colors border-b-2 border-primary text-on-surface">Overzicht</button>
           <button data-view="logbook" class="nav-btn text-sm font-medium py-1 text-on-surface-variant hover:text-on-surface transition-colors border-b-2 border-transparent">Logboek Invullen</button>
           <button data-view="evidence" class="nav-btn text-sm font-medium py-1 text-on-surface-variant hover:text-on-surface transition-colors border-b-2 border-transparent">Mijn Bewijzen</button>
         </nav>

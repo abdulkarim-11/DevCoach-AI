@@ -17,7 +17,7 @@
 
         <action name="saveLog" class="nl.delphinity.devcoach.actions.JournalEntryAction" method="saveLog">
             <interceptor-ref name="json">
-                <param name="root">log</param>
+                <param name="enableSMD">true</param>
             </interceptor-ref>
             <interceptor-ref name="defaultStack"/>
             <result type="json">

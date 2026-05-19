@@ -34,11 +34,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadData = async () => {
         try {
             const res = await fetch('/api/logs');
-            journalData = await res.json();
+            const contentType = res.headers.get("content-type");
+            
+            if (contentType && contentType.includes("application/json")) {
+                const data = await res.json();
+                journalData = data.logs || [];
+                if (currentView === 'dashboard') renderDashboard();
+                if (currentView === 'evidence') renderEvidence();
+            } else {
+                throw new Error("Geen JSON (backend offline?)");
+            }
+        } catch (err) {
+            console.warn("Backend niet bereikbaar, terugvallen op LocalStorage.");
+            const local = localStorage.getItem('journalData');
+            if (local) {
+                try {
+                    journalData = JSON.parse(local);
+                } catch(e) { journalData = []; }
+            } else {
+                journalData = [];
+            }
             if (currentView === 'dashboard') renderDashboard();
             if (currentView === 'evidence') renderEvidence();
-        } catch (err) {
-            console.error("Failed to load logs:", err);
         }
     }
 
@@ -303,28 +320,35 @@ document.addEventListener('DOMContentLoaded', () => {
             };
 
             try {
-                const res = await fetch('/api/logs', {
+                const res = await fetch('/api/saveLog', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(newEntry)
+                    body: JSON.stringify({ log: newEntry })
                 });
                 
-                if (!res.ok) throw new Error('Failed to save log');
+                const contentType = res.headers.get("content-type");
+                if (!res.ok || !contentType || !contentType.includes("application/json")) {
+                    throw new Error('Niet-JSON proxy respons');
+                }
                 
                 await loadData();
-
-                // Reset form
-                form.reset();
-                selectedProcesses = [];
-                renderProcessTags();
-                document.getElementById('input-date').value = new Date().toISOString().split('T')[0];
-                
                 showToast('Logboek is succesvol opgeslagen in SQL!', 'success');
-                switchView('evidence');
             } catch (err) {
-                console.error(err);
-                showToast("Er ging iets mis bij het opslaan.", 'error');
+                console.warn("Backend opslaan mislukt, lokaal opgeslagen:", err);
+                journalData.push(newEntry);
+                localStorage.setItem('journalData', JSON.stringify(journalData));
+                if (currentView === 'dashboard') renderDashboard();
+                if (currentView === 'evidence') renderEvidence();
+                showToast('Logboek lokaal opgeslagen (backend niet bereikbaar).', 'success');
             }
+
+            // Reset form
+            form.reset();
+            selectedProcesses = [];
+            renderProcessTags();
+            document.getElementById('input-date').value = new Date().toISOString().split('T')[0];
+            
+            switchView('evidence');
         });
     }
 

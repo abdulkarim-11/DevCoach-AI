@@ -10,11 +10,14 @@
     --color-surface-container: var(--surface-container-color);
     --color-on-surface: var(--text-color);
     --color-on-surface-variant: var(--text-muted);
+    
     --color-primary: var(--primary-color);
     --color-on-primary: var(--on-primary-color);
+    
     --color-secondary: var(--secondary-color);
     --color-tertiary: var(--tertiary-color);
     --color-error: var(--error-color);
+    
     --color-border: var(--border-color);
     --color-border-hover: var(--border-hover-color);
     --color-input: var(--input-bg);
