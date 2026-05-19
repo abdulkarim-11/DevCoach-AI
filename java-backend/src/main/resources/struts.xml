@@ -1,35 +1,24 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE struts PUBLIC
     "-//Apache Software Foundation//DTD Struts Configuration 7.0//EN"
-    "https://struts.apache.org/dtds/struts-7.0.dtd">
-
+    "http://struts.apache.org/dtds/struts-7.0.dtd">
 <struts>
-    <constant name="struts.devMode" value="true" />
-    <constant name="struts.action.extension" value="," />
-
-    <package name="api" extends="json-default" namespace="/api">
-        
-        <action name="logs" class="nl.delphinity.devcoach.actions.JournalEntryAction" method="getAllLogs">
-            <result type="json">
-                <param name="root">logs</param>
-            </result>
+    <constant name="struts.devMode" value="true"/>
+    <package name="default" namespace="/" extends="struts-default">
+        <action name="">
+            <result>/index.jsp</result>
         </action>
-
-        <action name="saveLog" class="nl.delphinity.devcoach.actions.JournalEntryAction" method="saveLog">
-            <interceptor-ref name="json">
-                <param name="enableSMD">true</param>
-            </interceptor-ref>
-            <interceptor-ref name="defaultStack"/>
-            <result type="json">
-                <param name="root">message</param>
-            </result>
+        <action name="goToHello">
+            <result>/view/helloStrutsAndHibernate.jsp</result>
         </action>
-
-        <action name="deleteLog" class="nl.delphinity.devcoach.actions.JournalEntryAction" method="deleteLog">
-            <result type="json">
-                <param name="root">message</param>
-            </result>
+        <action name="showMessage" class="nl.delphinity.sample.actions.MessageAction">
+            <result name="success">/view/helloStrutsAndHibernate.jsp</result>
         </action>
-
+        <action name="saveText" class="nl.delphinity.sample.actions.MessageAction" method="saveText">
+            <result name="success" type="redirectAction">showMessage</result>
+        </action>
+        <action name="deleteText" class="nl.delphinity.sample.actions.MessageAction" method="deleteText">
+            <result name="success" type="redirectAction">showMessage</result>
+        </action>
     </package>
 </struts>

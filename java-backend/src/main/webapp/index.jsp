@@ -1,1 +1,1 @@
-<% response.sendRedirect("home.action"); %>
+<% response.sendRedirect("showMessage.action"); %>

@@ -3,7 +3,7 @@ package nl.delphinity.sample.domain;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="logboek")
+@Table(name="text")
 public class TextObject {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

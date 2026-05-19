@@ -7,22 +7,27 @@ import java.util.List;
 
 public class TextDAO {
     public void save(TextObject text) {
-        Transaction transaction = null;
         try (Session session = HibernateSessionManager.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-            session.persist(text);
+            Transaction transaction = session.beginTransaction();
+            session.merge(text);
             transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
         }
     }
 
     public List<TextObject> getAll() {
         try (Session session = HibernateSessionManager.getSessionFactory().openSession()) {
             return session.createQuery("from TextObject", TextObject.class).list();
+        }
+    }
+
+    public void delete(Long id) {
+        try (Session session = HibernateSessionManager.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            TextObject text = session.get(TextObject.class, id);
+            if (text != null) {
+                session.remove(text);
+            }
+            transaction.commit();
         }
     }
 }

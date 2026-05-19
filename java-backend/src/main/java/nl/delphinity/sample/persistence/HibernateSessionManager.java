@@ -4,14 +4,16 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 public class HibernateSessionManager {
-    private static final SessionFactory sessionFactory;
-    static {
+    private static final SessionFactory sessionFactory = buildSessionFactory();
+    
+    private static SessionFactory buildSessionFactory() {
         try {
-            sessionFactory = new Configuration().configure("hibernate/hibernate.cfg.xml").buildSessionFactory();
+            return new Configuration().configure("hibernate/hibernate.cfg.xml").buildSessionFactory();
         } catch (Throwable ex) {
             throw new ExceptionInInitializerError(ex);
         }
     }
+    
     public static SessionFactory getSessionFactory() {
         return sessionFactory;
     }
