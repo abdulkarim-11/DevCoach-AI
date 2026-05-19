@@ -1,6 +1,6 @@
 {
-  "name": "",
-  "description": "",
+  "name": "DevCoach Struts",
+  "description": "DevCoach backend implementation using Struts 7 and Hibernate 6.",
   "requestFramePermissions": [],
-  "majorCapabilities": []
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
